@@ -40,10 +40,10 @@ class App extends Component {
               <NavLink to="/goods">商品</NavLink>
             </div>
             <div className="tab-item">
-              <NavLink to="/ratings">评论</NavLink>
+              <NavLink to="/ratings">评价</NavLink>
             </div>
             <div className="tab-item">
-              <NavLink to="/seller">商家</NavLink>
+              <NavLink to="/seller">店铺</NavLink>
             </div>
           </div>
 
