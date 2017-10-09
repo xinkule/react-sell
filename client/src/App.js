@@ -11,7 +11,7 @@ const ERR_OK = 0;
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { seller: Object.create(null) };
   }
 
   componentDidMount() {
@@ -19,7 +19,6 @@ class App extends Component {
       .then(this.checkStatus)
       .then(response => response.json())
       .then(json => {
-        // console.log(json);
         if (json.errno === ERR_OK) {
           this.setState({
             seller: json.data,
@@ -34,7 +33,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Head></Head>
+          <Head seller={this.state.seller}></Head>
 
           <div className="tab border-1px">
             <div className="tab-item">
