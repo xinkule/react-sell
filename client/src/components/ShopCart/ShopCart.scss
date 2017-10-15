@@ -1,0 +1,97 @@
+.ShopCart {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
+  width: 100%;
+  height: 46px;
+  .content {
+    display: flex;
+    background: #504d53;
+    color: #fff;
+    .content-left {
+      flex: 1;
+      .logo-wrapper {
+        display: inline-block;
+        position: relative;
+        top: -13px;
+        margin: 0 14px;
+        padding: 6px;
+        width: 53px;
+        height: 53px;
+        box-sizing: border-box;
+        vertical-align: top;
+        border-radius: 50%;
+        background: #403e42;
+        .logo {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          text-align: center;
+          background: #302e31;
+          &.highlight {
+            background: #0698f1;
+          }
+
+          .icon-shopping_cart {
+            line-height: 44px;
+            font-size: 24px;
+            color: #4c4e50;
+            &.highlight {
+              color: #fff;
+            }
+          }
+        }
+
+        .num {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 17px;
+          height: 15px;
+          line-height: 15px;
+          text-align: center;
+          border-radius: 15px;
+          font-size: 10px;
+          font-weight: 700;
+          color: #fff;
+          background: #ff3636;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+        }
+      }
+
+      .price-wrapper {
+        display: inline-block;
+        margin-top: 8px;
+        box-sizing: border-box;
+        .price {
+          line-height: 17px;
+          font-size: 17px;
+        }
+
+        .desc {
+          margin: 6px 0 0;
+          line-height: 7px;
+          font-size: 9px;
+          color: #999;
+        }
+      }
+    }
+
+    .content-right {
+      flex: 0 0 105px;
+      width: 105px;
+      .pay {
+        height: 48px;
+        line-height: 48px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 700;
+        background: #545256;
+        &.enough {
+          background: #51d862;
+        }
+      }
+    }
+  }
+}
