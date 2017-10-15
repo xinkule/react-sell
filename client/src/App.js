@@ -6,16 +6,16 @@ import Goods from './components/Goods/Goods';
 import Ratings from './components/Ratings/Ratings';
 import Seller from './components/Seller/Seller';
 
-const ERR_OK = 0;
-
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { seller: Object.create(null) };
+    this.state = { seller: {} };
   }
 
   componentDidMount() {
-    fetch('http://localhost:3001/api/seller')
+    const ERR_OK = 0;
+
+    fetch('http://192.168.0.105:3001/api/seller')
       .then(this.checkStatus)
       .then(response => response.json())
       .then(json => {
@@ -27,6 +27,15 @@ class App extends Component {
       }).catch(error => {
         console.log('request failed', error);
       });
+  }
+
+  checkStatus(response) {
+    if (response.ok) {
+      return response;
+    }
+    const error = new Error(response.statusText);
+    error.response = response;
+    throw error;
   }
 
   render() {
@@ -47,21 +56,12 @@ class App extends Component {
             </div>
           </div>
 
-          <Route path="/goods" component={Goods} />
+          <Route path="/goods" render={() => <Goods seller={this.state.seller} />} />
           <Route path="/ratings" component={Ratings} />
           <Route path="/seller" component={Seller} />
         </div>
       </Router>
     );
-  }
-
-  checkStatus(response) {
-    if (response.ok) {
-      return response;
-    }
-    const error = new Error(response.statusText);
-    error.response = response;
-    throw error;
   }
 }
 
