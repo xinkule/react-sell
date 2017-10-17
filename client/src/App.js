@@ -9,24 +9,55 @@ import Seller from './components/Seller/Seller';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { seller: {} };
+    this.state = {
+      seller: {},
+      goods: [],
+      selectFoods: [],
+    };
+    this.handleShopCartChange = this.handleShopCartChange.bind(this);
   }
 
   componentDidMount() {
     const ERR_OK = 0;
 
-    fetch('http://192.168.0.105:3001/api/seller')
+    const apiSeller =
+      fetch('http://192.168.0.105:3001/api/seller')
       .then(this.checkStatus)
-      .then(response => response.json())
-      .then(json => {
-        if (json.errno === ERR_OK) {
+      .then(response => response.json());
+
+    const apiGoods =
+      fetch('http://192.168.0.105:3001/api/goods')
+      .then(this.checkStatus)
+      .then(response => response.json());
+
+    Promise.all([apiSeller, apiGoods])
+      .then(jsons => {
+        console.log('fetch');
+        if (jsons[0].errno === ERR_OK && jsons[1].errno === ERR_OK) {
           this.setState({
-            seller: json.data,
+            seller: jsons[0].data,
+            goods: jsons[1].data,
           });
         }
       }).catch(error => {
         console.log('request failed', error);
       });
+  }
+
+  handleShopCartChange() {
+    const foods = [];
+    // 计算购物车里的商品
+    this.state.goods.forEach((good) => {
+      good.foods.forEach((item) => {
+        if (item.count) {
+          foods.push(item);
+        }
+      });
+    });
+    this.setState((prevState) => ({
+      goods: prevState.goods,
+      selectFoods: foods,
+    }));
   }
 
   checkStatus(response) {
@@ -56,7 +87,17 @@ class App extends Component {
             </div>
           </div>
 
-          <Route path="/goods" render={() => <Goods seller={this.state.seller} />} />
+          <Route
+            path="/goods"
+            render={() =>
+              <Goods
+                seller={this.state.seller}
+                goods={this.state.goods}
+                onShopCartChange={this.handleShopCartChange}
+                selectFoods={this.state.selectFoods}
+              />
+            }
+          />
           <Route path="/ratings" component={Ratings} />
           <Route path="/seller" component={Seller} />
         </div>

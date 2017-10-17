@@ -2,45 +2,27 @@ import React, { Component } from 'react';
 import BScroll from 'better-scroll';
 import './Goods.css';
 import ShopCart from '../ShopCart/ShopCart';
+import CartControl from '../CartControl/CartControl';
 
 class Goods extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      goods: [],
-      currentIndex: 0,
-      selectFoods: [
-        {
-          price: 10,
-          count: 1,
-        },
-        {
-          price: 12,
-          count: 2,
-        },
-      ],
-    };
+    this.state = { currentIndex: 0 };
+    this.handleCartControlClick = this.handleCartControlClick.bind(this);
   }
 
   componentDidMount() {
-    const ERR_OK = 0;
+    // hack方法刷新dom以正确计算滚动高度
+    setTimeout(() => {
+      this.initScroll();
+      this.calculateHeight();
+    });
+  }
 
-    fetch('http://192.168.0.105:3001/api/goods')
-      .then(this.checkStatus)
-      .then(response => response.json())
-      .then(json => {
-        if (json.errno === ERR_OK) {
-          this.setState({
-            goods: json.data,
-          }, () => {
-            // 初始化滚动
-            this.initScroll();
-            this.calculateHeight();
-          });
-        }
-      }).catch(error => {
-        console.log('request failed', error);
-      });
+  componentWillUnmount() {
+    // 切换router的时候，会销毁组件，需要同时销毁滚动组件
+    this.menuScroll.destroy();
+    this.foodsScroll.destroy();
   }
 
   handleMenuClick(index) {
@@ -50,13 +32,8 @@ class Goods extends Component {
     this.setState({ currentIndex: index });
   }
 
-  checkStatus(response) {
-    if (response.ok) {
-      return response;
-    }
-    const error = new Error(response.statusText);
-    error.response = response;
-    throw error;
+  handleCartControlClick() {
+    this.props.onShopCartChange();
   }
 
   initScroll() {
@@ -100,7 +77,8 @@ class Goods extends Component {
   }
 
   render() {
-    const { goods, currentIndex, selectFoods } = this.state;
+    const { currentIndex } = this.state;
+    const { goods, selectFoods } = this.props;
     const classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
 
     return (
@@ -144,6 +122,7 @@ class Goods extends Component {
                           }
                         </div>
                         <div className="cartcontrol-wrapper">
+                          <CartControl food={food} onCartControlClick={this.handleCartControlClick} />
                         </div>
                       </div>
                     </li>
