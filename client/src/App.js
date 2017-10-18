@@ -32,7 +32,6 @@ class App extends Component {
 
     Promise.all([apiSeller, apiGoods])
       .then(jsons => {
-        console.log('fetch');
         if (jsons[0].errno === ERR_OK && jsons[1].errno === ERR_OK) {
           this.setState({
             seller: jsons[0].data,
