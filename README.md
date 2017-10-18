@@ -1,13 +1,13 @@
 # react-seller
 
-项目是基于react重写了饿了么移动端SPA（店家页面），作为开始学习react全家桶的尝试。
+This project mimics [eleme](https://h5.ele.me/msite/) seller module SPA based on react, as a try when learning react framework.
 
 ## Feature
 
 - React
 - React-Router
 - ES6
-- Sass
+- SCSS
 - better-scroll
 
 ## Installing
@@ -24,9 +24,16 @@ Change to the react-sell directory:
 cd react-sell
 ```
 
-Install dependencies:
+Install server dependencies:
 
 ```bash
+npm install
+```
+
+Install client dependencies:
+
+```bash
+cd client
 npm install
 ```
 
