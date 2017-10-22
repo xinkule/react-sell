@@ -8,17 +8,19 @@ class CartControl extends Component {
     this.handleDecreaseClick = this.handleDecreaseClick.bind(this);
   }
 
-  handleAddClick() {
+  handleAddClick(e) {
+    e.stopPropagation();
     if (!this.props.food.count) {
       this.props.food.count = 0;
     }
     this.props.food.count++
-    this.props.onCartControlClick(this.props.food);
+    this.props.onCartControlClick();
   }
 
-  handleDecreaseClick() {
+  handleDecreaseClick(e) {
+    e.stopPropagation();
     this.props.food.count--;
-    this.props.onCartControlClick(this.props.food);
+    this.props.onCartControlClick();
   }
 
   render() {

@@ -5,10 +5,11 @@ This project mimics [eleme](https://h5.ele.me/msite/) seller module SPA based on
 ## Feature
 
 - React
-- React-Router
+- React Router
 - ES6
 - SCSS
 - better-scroll
+- fetch api
 
 ## Installing
 

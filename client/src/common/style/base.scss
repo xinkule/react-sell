@@ -5,17 +5,13 @@ body, html {
 }
 
 .group {
-  display: inline-block;
+  // display: block;
   &:after {
-    // display: block;
-    // content: ".";
-    // height: 0;
-    // line-height: 0;
-    // clear: both;
-    // visibility: hidden;
-    // content: " ";
-    // display: table;
-    // clear: both;
+    display: block;
+    content: "";
+    height: 0;
+    clear: both;
+    visibility: hidden;
   }
 }
 

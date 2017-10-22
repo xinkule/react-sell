@@ -122,8 +122,7 @@
     height: 100%;
     overflow: auto;
     background: rgba(7, 17, 27, 0.8);
-    opacity: 0;
-    transition: all 0.5s;
+    transition: all 0.3s linear;
     .detail-wrapper {
       box-sizing: border-box;
       width: 100%;
@@ -199,6 +198,22 @@
       height: 64px;
       margin: 0 auto;
       font-size: 32px;
+    }
+
+    &.fade-enter {
+      opacity: 0.01;
+    }
+
+    &.fade-enter.fade-enter-active {
+      opacity: 1;
+    }
+
+    &.fade-exit {
+      opacity: 1;
+    }
+
+    &.fade-exit.fade-exit-active {
+      opacity: 0.01;
     }
   }
 }

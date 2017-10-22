@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './Head.css';
 import ImgHolder from '../ImgHolder/ImgHolder';
 import Star from '../Star/Star';
@@ -8,24 +9,16 @@ class Head extends Component {
   constructor(props) {
     super(props);
     this.state = { shouldShowDetail: false };
-
     this.handleShowDetailClick = this.handleShowDetailClick.bind(this);
     this.handleHideDetailClick = this.handleHideDetailClick.bind(this);
   }
 
   handleShowDetailClick() {
     this.setState({ shouldShowDetail : true });
-    // fade效果hack
-    setTimeout(() => {
-      this.detailDiv.style.opacity = 1;
-    }, 0);
   }
 
   handleHideDetailClick() {
-    this.detailDiv.style.opacity = 0;
-    setTimeout(() => {
-      this.setState({ shouldShowDetail : false });
-    }, 500);
+    this.setState({ shouldShowDetail : false });
   }
 
   render() {
@@ -67,34 +60,38 @@ class Head extends Component {
         <div className="background">
           <ImgHolder src={seller.avatar} width="100%" height="100%" alt="seller" />
         </div>
-        {this.state.shouldShowDetail &&
-          <div className="detail" ref={(detail) => {this.detailDiv = detail; }}>
-            <div className="detail-wrapper">
-              <h1 className="name">{seller.name}</h1>
-              <div className="star-wrapper">
-                <Star size="48" score={seller.score} />
+        <TransitionGroup className="detail-transition">
+          {this.state.shouldShowDetail &&
+            <CSSTransition in={this.state.shouldShowDetail} timeout={300} classNames="fade">
+              <div className="detail" ref={(detail) => {this.detailDiv = detail; }}>
+                <div className="detail-wrapper">
+                  <h1 className="name">{seller.name}</h1>
+                  <div className="star-wrapper">
+                    <Star size="48" score={seller.score} />
+                  </div>
+                  <Title text="优惠信息"></Title>
+                  {seller.supports &&
+                    <ul className="supports">
+                      {seller.supports.map((support, index) =>
+                        <li className="support-item" key={index}>
+                          <span className={`icon ${classMap[support.type]}`}></span>
+                          <span className="text">{support.description}</span>
+                        </li>
+                      )}
+                    </ul>
+                  }
+                  <Title text="商家公告"></Title>
+                  <div className="bulletin">
+                    <p className="content">{seller.bulletin}</p>
+                  </div>
+                </div>
+                <div className="detail-close" onClick={this.handleHideDetailClick}>
+                  <i className="icon-close"></i>
+                </div>
               </div>
-              <Title text="优惠信息"></Title>
-              {seller.supports &&
-                <ul className="supports">
-                  {seller.supports.map((support, index) =>
-                    <li className="support-item" key={index}>
-                      <span className={`icon ${classMap[support.type]}`}></span>
-                      <span className="text">{support.description}</span>
-                    </li>
-                  )}
-                </ul>
-              }
-              <Title text="商家公告"></Title>
-              <div className="bulletin">
-                <p className="content">{seller.bulletin}</p>
-              </div>
-            </div>
-            <div className="detail-close" onClick={this.handleHideDetailClick}>
-              <i className="icon-close"></i>
-            </div>
-          </div>
-        }
+            </CSSTransition>
+          }
+        </TransitionGroup>
       </div>
     );
   }

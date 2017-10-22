@@ -37,6 +37,12 @@ class App extends Component {
             seller: jsons[0].data,
             goods: jsons[1].data,
           });
+
+          if (this.goodsComponent) {
+            this.goodsComponent.menuScroll.refresh();
+            this.goodsComponent.foodsScroll.refresh();
+            this.goodsComponent.calculateHeight();
+          }
         }
       }).catch(error => {
         console.log('request failed', error);
@@ -44,18 +50,18 @@ class App extends Component {
   }
 
   handleShopCartChange() {
-    const foods = [];
+    const selectFoods = [];
     // 计算购物车里的商品
     this.state.goods.forEach((good) => {
       good.foods.forEach((item) => {
         if (item.count) {
-          foods.push(item);
+          selectFoods.push(item);
         }
       });
     });
-    this.setState((prevState) => ({
-      goods: prevState.goods,
-      selectFoods: foods,
+    this.setState(({ goods }) => ({
+      goods,
+      selectFoods,
     }));
   }
 
@@ -94,6 +100,7 @@ class App extends Component {
                 goods={this.state.goods}
                 onShopCartChange={this.handleShopCartChange}
                 selectFoods={this.state.selectFoods}
+                ref={(goods) => { this.goodsComponent = goods; }}
               />
             }
           />

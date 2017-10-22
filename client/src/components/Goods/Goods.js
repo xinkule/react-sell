@@ -3,20 +3,23 @@ import BScroll from 'better-scroll';
 import './Goods.css';
 import ShopCart from '../ShopCart/ShopCart';
 import CartControl from '../CartControl/CartControl';
+import Food from '../Food/Food';
 
 class Goods extends Component {
   constructor(props) {
     super(props);
-    this.state = { currentIndex: 0 };
+    this.state = {
+      currentIndex: 0,
+      shouldShowFood: false,
+      selectedFood: {},
+    };
     this.handleCartControlClick = this.handleCartControlClick.bind(this);
+    this.hanldeMaskClick = this.hanldeMaskClick.bind(this);
   }
 
   componentDidMount() {
-    // hack方法刷新dom以正确计算滚动高度
-    setTimeout(() => {
-      this.initScroll();
-      this.calculateHeight();
-    });
+    this.initScroll();
+    this.calculateHeight();
   }
 
   componentWillUnmount() {
@@ -34,6 +37,17 @@ class Goods extends Component {
 
   handleCartControlClick() {
     this.props.onShopCartChange();
+  }
+
+  handleItemClick(food) {
+    this.setState({
+      shouldShowFood: true,
+      selectedFood: food,
+    });
+  }
+
+  hanldeMaskClick() {
+    this.setState({ shouldShowFood: false });
   }
 
   initScroll() {
@@ -77,7 +91,7 @@ class Goods extends Component {
   }
 
   render() {
-    const { currentIndex } = this.state;
+    const { currentIndex, shouldShowFood, selectedFood } = this.state;
     const { goods, selectFoods } = this.props;
     const classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
 
@@ -104,7 +118,7 @@ class Goods extends Component {
                 <h1 className="title">{item.name}</h1>
                 <ul>
                   {item.foods.map((food, index) =>
-                    <li className="food-item border-1px" key={index}>
+                    <li className="food-item border-1px" key={index} onClick={this.handleItemClick.bind(this, food)}>
                       <div className="icon">
                         <img width="57" height="57" src={food.icon} alt="icon" />
                       </div>
@@ -132,7 +146,18 @@ class Goods extends Component {
             )}
           </ul>
         </div>
-        <ShopCart selectFoods={selectFoods} deliveryPrice={this.props.seller.deliveryPrice} minPrice={this.props.seller.minPrice} />
+        <ShopCart
+          selectFoods={selectFoods}
+          deliveryPrice={this.props.seller.deliveryPrice}
+          minPrice={this.props.seller.minPrice}
+          onShopCartChange={this.handleCartControlClick}
+        />
+        <Food
+          selectedFood={selectedFood}
+          onMaskClick={this.hanldeMaskClick}
+          shouldShowFood={shouldShowFood}
+          onFoodAdd={this.handleCartControlClick}
+        />
       </div>
     );
   }
