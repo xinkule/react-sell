@@ -104,7 +104,7 @@ class App extends Component {
               />
             }
           />
-          <Route path="/ratings" component={Ratings} />
+          <Route path="/ratings" render={() => <Ratings seller={this.state.seller} />} />
           <Route path="/seller" component={Seller} />
         </div>
       </Router>
