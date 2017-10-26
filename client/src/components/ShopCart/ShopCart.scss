@@ -9,7 +9,7 @@
   height: 46px;
   .content {
     display: flex;
-    background: #504d53;
+    background: rgba(61,61,63,.9);
     color: #fff;
     .content-left {
       flex: 1;
@@ -24,15 +24,15 @@
         box-sizing: border-box;
         vertical-align: top;
         border-radius: 50%;
-        background: #403e42;
+        background: #444;
         .logo {
           width: 100%;
           height: 100%;
           border-radius: 50%;
           text-align: center;
-          background: #302e31;
+          background: #363636;
           &.highlight {
-            background: #0698f1;
+            background: #3190e8;
           }
 
           .icon-shopping_cart {
@@ -58,6 +58,7 @@
           font-weight: 700;
           color: #fff;
           background: #ff3636;
+          background-image: linear-gradient(-90deg,#ff7416,#ff3c15 98%);
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
         }
       }
@@ -89,9 +90,9 @@
         text-align: center;
         font-size: 14px;
         font-weight: 700;
-        background: #545256;
+        background: #535356;
         &.enough {
-          background: #51d862;
+          background: #4cd964;
         }
       }
     }
@@ -125,7 +126,7 @@
     .list-header {
       line-height: 40px;
       padding: 0 18px;
-      background: #f3f5f7;
+      background: #eceff1;
       border-bottom: 1px solid rgba(7, 17, 27, 0.1);
       .title {
         float: left;
@@ -163,7 +164,7 @@
           line-height: 24px;
           font-size: 14px;
           font-weight: 700;
-          color: rgb(240, 20, 20);
+          color: #f60;
         }
 
         .cartcontrol-wrapper {

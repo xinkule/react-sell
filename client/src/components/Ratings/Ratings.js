@@ -1,12 +1,57 @@
 import React, { Component } from 'react';
+// import BScroll from 'better-scroll';
 import './Ratings.css';
 import Star from '../Star/Star';
 import Split from '../Split/Split';
+import RatingSelect from '../RatingSelect/RatingSelect';
+
+const ALL = 2;
+const ERR_OK = 0;
 
 class Ratings extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      ratings: [],
+      selectType: ALL,
+      onlyContent: true,
+    };
+    this.handleLabelClick = this.handleLabelClick.bind(this);
+    this.handleSwitchClick = this.handleSwitchClick.bind(this);
+  }
+
+  componentDidMount() {
+    fetch('http://192.168.0.105:3001/api/ratings')
+      .then(this.checkStatus)
+      .then(response => response.json())
+      .then(json => {
+        if (json.errno === ERR_OK) {
+          this.setState({
+            ratings: json.data,
+          });
+        }
+      }).catch(error => {
+        console.log('request failed', error);
+      });
+  }
+
+  handleLabelClick(type) {
+    this.setState({ selectType: type });
+  }
+
+  handleSwitchClick() {
+    this.setState(({ onlyContent }) => ({
+      onlyContent: !onlyContent,
+    }));
+  }
+
+  checkStatus(response) {
+    if (response.ok) {
+      return response;
+    }
+    const error = new Error(response.statusText);
+    error.response = response;
+    throw error;
   }
 
   render() {
@@ -39,6 +84,13 @@ class Ratings extends Component {
             </div>
           </div>
           <Split/>
+          <RatingSelect
+            selectType={this.state.selectType}
+            onlyContent={this.state.onlyContent}
+            ratings={this.state.ratings}
+            onLabelClick={this.handleLabelClick}
+            onSwitchClick={this.handleSwitchClick}
+          />
         </div>
       </div>
     );
