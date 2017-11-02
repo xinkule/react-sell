@@ -29,10 +29,6 @@ class Ratings extends Component {
         if (json.errno === ERR_OK) {
           this.setState({
             ratings: json.data,
-          }, () => {
-            this.scroll = new BScroll(this.wrapper, {
-              click: true,
-            });
           });
         }
       }).catch(error => {
@@ -40,20 +36,26 @@ class Ratings extends Component {
       });
   }
 
+  componentDidUpdate() {
+    if (!this.scroll) {
+      this.scroll = new BScroll(this.wrapper, {
+        click: true,
+      });
+    } else {
+      this.scroll.refresh();
+    }
+  }
+
   handleLabelClick(type) {
     this.setState({
       selectType: type
-    }, () => {
-      this.scroll.refresh();
     });
   }
 
   handleSwitchClick() {
     this.setState(({ onlyContent }) => ({
       onlyContent: !onlyContent,
-    }), () => {
-      this.scroll.refresh();
-    });
+    }));
   }
 
   checkStatus(response) {
