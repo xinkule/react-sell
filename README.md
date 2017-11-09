@@ -1,8 +1,9 @@
 # react-seller
 
-This project mimics [eleme](https://h5.ele.me/msite/) seller module SPA based on react, as a try when learning react framework.
+这个项目是基于[黄轶](https://github.com/ustbhuangyi)老师的 [vue-sell](https://github.com/ustbhuangyi/vue-sell) 项目实现的， 样式上做了些改动  
+我用react技术栈重写了这个SPA作为初步学习的成果
 
-## Feature
+## 技术栈
 
 - React
 - React Router
@@ -11,36 +12,44 @@ This project mimics [eleme](https://h5.ele.me/msite/) seller module SPA based on
 - better-scroll
 - fetch api
 
-## Installing
+## TODO
 
-Clone a copy of the repo:
+- 下落小球动画
+- 图片加载动画
+- 路由状态保持
+
+## 安装
+
+将项目拷贝到本地
 
 ```bash
 git clone https://github.com/xinkule/react-sell.git
 ```
 
-Change to the react-sell directory:
+安装服务端依赖
 
 ```bash
 cd react-sell
-```
-
-Install server dependencies:
-
-```bash
 npm install
 ```
 
-Install client dependencies:
+安装客户端依赖
 
 ```bash
 cd client
 npm install
 ```
 
-## Running
+## 运行
 
-Click following batch file at the root directory
+Windows用户可直接点击以下文件
 ```bash
 run.bat
+```
+
+Mac用户需要同时开启服务端和客户端
+```bash
+npm start
+cd client
+npm start
 ```
